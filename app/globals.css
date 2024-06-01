@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+body {
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+/* new course */
+.section-title::after {
+  content: "";
+  height: 2px;
+  margin-left: 10px;
+  background-color: #f1f1f1;
+  flex: 1 0 20px;
+}
+
+.quill .ql-snow.ql-toolbar {
+  display: block;
+  background: #eaecec;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+.quill {
+  height: 200px;
+}
+
+.quill .ql-editor {
+  background-color: white;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+}
+
+
+
+.filepond--panel-root {
+  background-color: white !important;
+  border: 1px dashed gray !important;
+}
+
+.filepond--drop-label {
+  color: #171347 !important;
+}
+
+
+.filepond--root .filepond--credits {
+  display: none;
+}
+
+.react-multi-carousel-dot button {
+  width: 16px !important;
+  height: 16px !important;
+  margin-right: 16px !important;
+  border: 1px solid #d4d4d4 !important;
+}
+
+.react-multi-carousel-dot--active button {
+  background: #43d477 !important;
+}

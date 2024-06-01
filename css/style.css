@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply relative z-[1] bg-whiten font-satoshi text-base font-normal text-body;
+    }
+}
+
+@layer components {}
+
+@layer utilities {
+
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .chat-height {
+        @apply h-[calc(100vh_-_8.125rem)] lg:h-[calc(100vh_-_5.625rem)];
+    }
+
+    .inbox-height {
+        @apply h-[calc(100vh_-_8.125rem)] lg:h-[calc(100vh_-_5.625rem)];
+    }
+}
+
+/* third-party libraries CSS */
+
+/* .tableCheckbox:checked~div span {
+    @apply opacity-100;
+}
+
+.tableCheckbox:checked~div {
+    @apply border-primary bg-primary;
+}
+
+.apexcharts-legend-text {
+    @apply !text-body;
+}
+
+.apexcharts-text {
+    @apply !fill-body;
+}
+
+.apexcharts-xcrosshairs {
+    @apply !fill-stroke;
+}
+
+.apexcharts-gridline {
+    @apply !stroke-stroke;
+}
+
+
+.apexcharts-legend-series {
+    @apply !inline-flex gap-1.5;
+}
+
+
+
+
+.apexcharts-xaxistooltip-bottom:after {
+    @apply !border-b-gray;
+}
+
+.apexcharts-xaxistooltip-bottom:before {
+    @apply !border-b-gray;
+}
+
+.apexcharts-xaxistooltip-bottom {
+    @apply !rounded !border-none !bg-gray !text-xs !font-medium !text-black;
+}
+
+.apexcharts-tooltip-series-group {
+    @apply !pl-1.5;
+}
+
+.map-btn .jvm-zoom-btn {
+    @apply flex h-7.5 w-7.5 items-center justify-center rounded border border-stroke bg-white px-0 pb-0.5 pt-0 text-2xl leading-none text-body hover:border-primary hover:bg-primary hover:text-white;
+}
+
+.mapOne .jvm-zoom-btn {
+    @apply !bottom-0 !left-auto !top-auto;
+}
+
+.mapOne .jvm-zoom-btn.jvm-zoomin {
+    @apply !right-10;
+}
+
+.mapOne .jvm-zoom-btn.jvm-zoomout {
+    @apply !right-0;
+}
+
+.taskCheckbox:checked~.box span {
+    @apply opacity-100;
+}
+
+.taskCheckbox:checked~p {
+    @apply line-through;
+}
+
+.taskCheckbox:checked~.box {
+    @apply border-primary bg-primary;
+}
+
+.custom-input-date::-webkit-calendar-picker-indicator {
+    background: transparent;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+    @apply appearance-none;
+}
+
+.custom-input-date::-webkit-calendar-picker-indicator {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 20px;
+}
+
+[x-cloak] {
+    display: none !important;
+} */
