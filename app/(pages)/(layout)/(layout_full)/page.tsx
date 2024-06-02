@@ -329,12 +329,20 @@ export default function Home() {
                   boxShadow: "0 19px 38px rgba(0, 0, 0, 0.05), 0 15px 12px rgba(0, 0, 0, 0.02)"
                 }}>
                   <div className="w-full flex justify-center items-center">
-                    <div className="w-[100px] h-[100px] relative">
+                    {/* <div className="w-[100px] h-[100px] relative">
                       <Image
                         src={`${teacher?.avatar ? teacher.avatar : '/images/avatar-teacher.png'} `}
                         fill
                         alt="avatar"
                         className="rounded-full overflow-hidden object-cover object-center w-full h-full"
+                      />
+                    </div> */}
+                    <div className='relative w-40 h-40'>
+                      <Image
+                        src={`${teacher?.avatar ? teacher?.avatar : "/images/avatar-teacher.png"}`}
+                        fill
+                        className='rounded-full overflow-hidden object-cover object-center'
+                        alt="logo"
                       />
                     </div>
                   </div>
