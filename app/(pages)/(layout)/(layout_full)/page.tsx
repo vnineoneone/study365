@@ -337,7 +337,7 @@ export default function Home() {
                         className="rounded-full overflow-hidden object-cover object-center w-full h-full"
                       />
                     </div> */}
-                    <div className='relative w-40 h-40'>
+                    <div className='relative w-32 h-32'>
                       <Image
                         src={`${teacher?.avatar ? teacher?.avatar : "/images/avatar-teacher.png"}`}
                         fill

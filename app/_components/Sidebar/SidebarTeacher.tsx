@@ -22,7 +22,7 @@ export default function SidebarTeacher() {
             >
                 <div className="h-full px-3 py-4 overflow-y-auto">
                     <div className='flex flex-row items-end justify-center'>
-                        <div className="w-[100px] h-[100px] relative">
+                        <div className="w-24 h-24 relative">
                             <Image
                                 src={`${user.avatar ? user.avatar : '/images/avatar-teacher.png'} `}
                                 fill

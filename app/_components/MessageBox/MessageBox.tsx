@@ -24,12 +24,11 @@ export default function MessageBox({ conversations, user }: any) {
                                 href={`/chat/${conversation.id}`}
                                 className="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700"
                             >
-                                <div className="flex-shrink-0 mt-1">
+                                <div className="flex-shrink-0 mt-1 relative w-11 h-11 ">
                                     <Image
                                         src={`${conversation.friend ? (conversation.friend.avatar ? conversation.friend.avatar : "/images/avatar.png") : '/images/avatar-group.jpg'} `}
-                                        width={24}
-                                        height={24}
-                                        className="w-11 h-11 rounded-full"
+                                        fill
+                                        className="rounded-full overflow-hidden object-cover object-center w-full h-full"
                                         alt="avatar"
                                     />
 
