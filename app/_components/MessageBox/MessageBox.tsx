@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { User } from '@chatscope/use-chat';
 
 export default function MessageBox({ conversations, user }: any) {
 
@@ -33,7 +32,7 @@ export default function MessageBox({ conversations, user }: any) {
                                     />
 
                                 </div> */}
-                                <div className='flex-shrink-0 mt-1 relative w-11 h-11'>
+                                <div className='relative w-11 h-11'>
                                     <Image
                                         src={`${conversation?.individual ? (conversation?.friend?.avatar ? conversation?.friend?.avatar : "/images/avatar.png") : '/images/avatar-group.jpg'} `}
                                         fill
