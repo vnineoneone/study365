@@ -26,7 +26,7 @@ export default function MessageBox({ conversations, user }: any) {
                                 {
                                     conversation?.individual ? <div className='relative w-11 h-11'>
                                         <Image
-                                            src={`${conversation?.avatar ? conversation?.avatar : "/images/avatar.png"} `}
+                                            src={`${conversation?.friend?.avatar || "/images/avatar.png"} `}
                                             fill
                                             className='rounded-full overflow-hidden object-cover object-center'
                                             alt="logo"
