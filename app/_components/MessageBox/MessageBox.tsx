@@ -23,23 +23,31 @@ export default function MessageBox({ conversations, user }: any) {
                                 href={`/chat/${conversation.id}`}
                                 className="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700"
                             >
-                                {/* <div className="flex-shrink-0 mt-1 relative w-11 h-11">
-                                    <Image
-                                        src={`${conversation?.friend ? (conversation?.friend?.avatar ? conversation?.friend?.avatar : "/images/avatar.png") : '/images/avatar-group.jpg'} `}
-                                        fill
-                                        className="rounded-full overflow-hidden object-cover object-center"
-                                        alt="logo"
-                                    />
-
-                                </div> */}
-                                <div className='relative w-11 h-11'>
+                                {
+                                    conversation?.individual ? <div className='relative w-11 h-11'>
+                                        <Image
+                                            src={`${conversation?.avatar ? conversation?.avatar : "/images/avatar.png"} `}
+                                            fill
+                                            className='rounded-full overflow-hidden object-cover object-center'
+                                            alt="logo"
+                                        />
+                                    </div> : <div className='relative w-11 h-11'>
+                                        <Image
+                                            src='/images/avatar-group.jpg'
+                                            fill
+                                            className='rounded-full overflow-hidden object-cover object-center'
+                                            alt="logo"
+                                        />
+                                    </div>
+                                }
+                                {/* <div className='relative w-11 h-11'>
                                     <Image
                                         src={`${conversation?.individual ? (conversation?.friend?.avatar ? conversation?.friend?.avatar : "/images/avatar.png") : '/images/avatar-group.jpg'} `}
                                         fill
                                         className='rounded-full overflow-hidden object-cover object-center'
                                         alt="logo"
                                     />
-                                </div>
+                                </div> */}
 
                                 <div className="w-full px-3">
                                     <div>
