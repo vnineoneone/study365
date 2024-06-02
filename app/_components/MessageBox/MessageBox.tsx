@@ -28,11 +28,12 @@ export default function MessageBox({ conversations, user }: any) {
                                     <Image
                                         src={`${conversation?.friend ? (conversation?.friend?.avatar ? conversation?.friend?.avatar : "/images/avatar.png") : '/images/avatar-group.jpg'} `}
                                         fill
-                                        className="rounded-full overflow-hidden object-cover object-center w-full h-full"
+                                        className="rounded-full overflow-hidden object-cover object-center"
                                         alt="avatar"
                                     />
 
                                 </div>
+
                                 <div className="w-full px-3">
                                     <div>
 
