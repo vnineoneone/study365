@@ -25,6 +25,11 @@ const courseApi = {
         return await axiosConfig.get(url, { params });
     },
 
+    searchCourse: async (query: string) => {
+        const url = `/courses/search/page/1?query=${query}`;
+        return await axiosConfig.post(url);
+    },
+
     searchForum: async (id_forum: string, params: object) => {
         const url = `/topicsforum/search/${id_forum}/page/1`;
         return await axiosConfig.get(url, { params });

@@ -1,7 +1,7 @@
 "use client"
 import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react';
-import { XMarkIcon, ClockIcon, Squares2X2Icon, FilmIcon, DocumentTextIcon, QuestionMarkCircleIcon, ClipboardDocumentIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, ClockIcon, Squares2X2Icon, FilmIcon, DocumentTextIcon, QuestionMarkCircleIcon, ClipboardDocumentIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, StarIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -32,6 +32,8 @@ export default function ComboList() {
     const [countPaginate, setCountPaginate] = useState(1)
     const page = searchParams.get('page') || '1'
     const authUser = useAppSelector(state => state.authReducer.user);
+    const [loading, setLoading] = useState(false);
+    const [searchInput, setSearchInput] = useState('')
 
     const sortOptions = [
         { name: 'Mới nhất', href: '?sort=date&order=desc', current: sortFilters === 'date' },
@@ -108,61 +110,84 @@ export default function ComboList() {
             <div>
                 <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-6">
-                        <h1 className="text-4xl font-bold tracking-tight text-gray-900">Đề thi</h1>
-
-                        <div className="flex items-center">
-                            <Menu as="div" className="relative inline-block text-left">
-                                <div>
-                                    <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                                        Sắp xếp
-                                        <ChevronDownIcon
-                                            className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                            aria-hidden="true"
-                                        />
-                                    </Menu.Button>
-                                </div>
-
-                                <Transition
-                                    as={Fragment}
-                                    enter="transition ease-out duration-100"
-                                    enterFrom="transform opacity-0 scale-95"
-                                    enterTo="transform opacity-100 scale-100"
-                                    leave="transition ease-in duration-75"
-                                    leaveFrom="transform opacity-100 scale-100"
-                                    leaveTo="transform opacity-0 scale-95"
-                                >
-                                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                        <div className="py-1">
-                                            {sortOptions?.map((option) => (
-                                                <Menu.Item key={option.name}>
-                                                    {({ active }) => (
-                                                        <Link
-                                                            href={option.href}
-                                                            className={classNames(
-                                                                option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                                                                active ? 'bg-gray-100' : '',
-                                                                'block px-4 py-2 text-sm'
-                                                            )}
-                                                        >
-
-                                                            {option.name}
-                                                        </Link>
-                                                    )}
-                                                </Menu.Item>
-                                            ))}
-                                        </div>
-                                    </Menu.Items>
-                                </Transition>
-                            </Menu>
-
-                            <button
-                                type="button"
-                                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+                        <h1 className="text-4xl font-bold tracking-tight text-gray-900 w-1/4">Đề thi</h1>
+                        <div className='ml-9 flex-1 flex justify-between items-center'>
+                            <form className="flex items-center w-1/2"
+                                onSubmit={async (e: any) => {
+                                    e.preventDefault()
+                                    setLoading(true)
+                                    await examApi.searchCombo({ query: searchInput }).then((data: any) => {
+                                        setCombos(data.data.result)
+                                    }).catch((err: any) => { })
+                                    setLoading(false)
+                                }}
                             >
-                                <span className="sr-only">Filters</span>
-                                <FunnelIcon className="h-5 w-5" aria-hidden="true" />
-                            </button>
+                                <label htmlFor="simple-search" className="sr-only">Search</label>
+                                <div className="relative w-full">
+                                    <input onChange={async (e: any) => {
+                                        setSearchInput(e.target.value)
+                                    }} type="text" id="simple-search" className="w-full text-sm text-[#343434]  rounded-md border-[1px] border-[#ececec] focus:ring-0 focus:border-primary_border" placeholder="Tìm kiếm đề thi" />
+                                </div>
+                                <button type="submit" className="ml-2 bg-primary p-2.5 rounded-md shadow-primary_btn_shadow border-primary text-white hover:bg-primary_hover">
+                                    <MagnifyingGlassIcon className='w-4 h-4' />
+                                    <span className="sr-only">Search</span>
+                                </button>
+                            </form>
+                            <div className="flex items-center">
+                                <Menu as="div" className="relative inline-block text-left">
+                                    <div>
+                                        <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                                            Sắp xếp
+                                            <ChevronDownIcon
+                                                className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                                aria-hidden="true"
+                                            />
+                                        </Menu.Button>
+                                    </div>
+
+                                    <Transition
+                                        as={Fragment}
+                                        enter="transition ease-out duration-100"
+                                        enterFrom="transform opacity-0 scale-95"
+                                        enterTo="transform opacity-100 scale-100"
+                                        leave="transition ease-in duration-75"
+                                        leaveFrom="transform opacity-100 scale-100"
+                                        leaveTo="transform opacity-0 scale-95"
+                                    >
+                                        <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                            <div className="py-1">
+                                                {sortOptions?.map((option) => (
+                                                    <Menu.Item key={option.name}>
+                                                        {({ active }) => (
+                                                            <Link
+                                                                href={option.href}
+                                                                className={classNames(
+                                                                    option.current ? 'font-medium text-gray-900' : 'text-gray-500',
+                                                                    active ? 'bg-gray-100' : '',
+                                                                    'block px-4 py-2 text-sm'
+                                                                )}
+                                                            >
+
+                                                                {option.name}
+                                                            </Link>
+                                                        )}
+                                                    </Menu.Item>
+                                                ))}
+                                            </div>
+                                        </Menu.Items>
+                                    </Transition>
+                                </Menu>
+
+                                <button
+                                    type="button"
+                                    className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+                                >
+                                    <span className="sr-only">Filters</span>
+                                    <FunnelIcon className="h-5 w-5" aria-hidden="true" />
+                                </button>
+                            </div>
                         </div>
+
                     </div>
 
                     <section aria-labelledby="products-heading" className="pb-24 pt-4">
@@ -230,6 +255,11 @@ export default function ComboList() {
                             </form>
 
                             <div className="lg:col-span-3 flex-1">
+                                {
+                                    loading ? <div className="flex h-[calc(100vh-174px)] items-center justify-center bg-white dark:bg-black">
+                                        <div className="h-10 w-10 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"></div>
+                                    </div> : null
+                                }
                                 <div className='grid grid-cols-2 gap-x-8 gap-y-8 mt-2'>
                                     {
                                         combos?.map((combo: any) => {
@@ -256,7 +286,7 @@ export default function ComboList() {
                                                                     />
                                                                 </div>
                                                                 <div>
-                                                                    <p className='font-medium text-[#818894]'>{combo.teacher.name}</p>
+                                                                    <p className='font-medium text-[#818894]'>{combo.teacher?.name}</p>
                                                                 </div>
                                                             </div>
                                                             <h3 className="overflow-hidden text-[#17134] mt-4 h-8 font-bold text-ellipsis whitespace-nowrap">

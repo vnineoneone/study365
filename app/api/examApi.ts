@@ -11,6 +11,11 @@ const examApi = {
         return axiosConfig.get(url);
     },
 
+    searchCombo: async (params: object) => {
+        const url = `/combos/search/page/1`;
+        return await axiosConfig.get(url, { params });
+    },
+
     getAllReviewExamByTeacher: (id_teacher: string) => {
         const url = `/reviews/teacher/${id_teacher}`;
         return axiosConfig.get(url, {
