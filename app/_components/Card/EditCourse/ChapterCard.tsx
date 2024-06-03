@@ -151,7 +151,7 @@ export const ChapterCard = ({ chapter, handleForm, indexChapter, innerRef, provi
         }
     };
 
-    console.log(fieldsLecture, errors, 231);
+    console.log(fieldsLecture, 123123);
 
 
     return (
@@ -787,7 +787,7 @@ export const ChapterCard = ({ chapter, handleForm, indexChapter, innerRef, provi
                                                         (provided) => (
 
                                                             <TopicCard
-                                                                chapter={chapter} topic={topic} indexChapter={indexChapter} indexTopic={indexTopic} indexLecture={indexTopic} indexExam={indexTopic} hanldeForm={handleForm} innerRef={provided.innerRef} provided={provided} data={data} setData={setData}
+                                                                chapter={chapter} topic={topic} indexChapter={indexChapter} indexTopic={indexTopic} hanldeForm={handleForm} innerRef={provided.innerRef} provided={provided} data={data} setData={setData}
                                                                 removeLecture={removeLecture} fieldsLecture={fieldsLecture} setTypeSubmit={setTypeSubmit} id_course={id_course} setChange={setChange} change={change}
                                                             />
                                                         )

@@ -103,6 +103,7 @@ export const TopicCard = ({ chapter, topic, indexChapter, indexTopic, hanldeForm
         }
     };
 
+
     return (
         <div ref={innerRef} {...provided.draggableProps}  >
             <>
@@ -688,7 +689,7 @@ export const TopicCard = ({ chapter, topic, indexChapter, indexTopic, hanldeForm
                                                 setTypeSubmit(`edit_${topic?.type}_${topic.id || topic.key}`)
                                                 if (chapter.modify != "create") {
                                                     setValue(`chapters.${indexChapter}.modify`, 'change')
-                                                    if (chapter.topics[indexTopic]?.modify != "create")
+                                                    if (getValues().chapters[indexChapter]?.topics[indexTopic]?.modify != "create")
                                                         setValue(`chapters.${indexChapter}.topics.${indexTopic}.modify`, 'change')
                                                 }
                                                 setChange(!change)

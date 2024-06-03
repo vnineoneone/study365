@@ -353,6 +353,7 @@ export default function EditExam({ id, exam }: any) {
                             return
                         }
                         setChange(!change)
+
                         if (submit) {
                             const { thumbnail, cover, ...data1 } = dataForm
                             data1.categories = []
@@ -360,6 +361,8 @@ export default function EditExam({ id, exam }: any) {
                             data1.categories.push(dataForm.grade)
                             data1.categories.push(dataForm.subject)
                             data1.categories.push(dataForm.level)
+
+
                             MySwal.fire({
                                 title: <p className='text-lg'>Đang xử lý</p>,
                                 didOpen: async () => {

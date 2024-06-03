@@ -160,7 +160,7 @@ export default function Edit({ id, course }: any) {
                             //     })
                             // })
 
-                            console.log(data1, 32);
+                            console.log("submit", data1);
 
 
                             const formData = new FormData();
