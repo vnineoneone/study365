@@ -5,6 +5,7 @@ import categoryApi from '@/app/api/category';
 import userApi from '@/app/api/userApi';
 import { useAppSelector } from '@/redux/store';
 import Link from 'next/link';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FilePond, registerPlugin } from 'react-filepond'
@@ -13,13 +14,19 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 type user = {
     id: string,
     name: string,
     phone: string,
     email: string,
-    subject: string
+    Subject: string
+    degree: string
+    biostory: string
 
 }
 
@@ -43,6 +50,7 @@ const EditProfilePage = () => {
         handleSubmit: handleSubmitTeacher,
         formState: { errors: errorsTeacher },
         setValue: setValueTeacher,
+        getValues: getValuesTeacher
     } = useForm<user>({
         defaultValues: info
     })
@@ -77,7 +85,39 @@ const EditProfilePage = () => {
 
     return (
         <div className=''>
-            <form onSubmit={(handleSubmitTeacher(() => { }))} className="space-y-4 md:space-y-6" action="#">
+            <form onSubmit={(handleSubmitTeacher((data: any) => {
+                const formData = {
+                    data: {
+                        ...data,
+                        categories: [data.Subject],
+                    }
+                }
+                console.log(formData);
+
+                MySwal.fire({
+                    title: <p className='text-lg'>Đang xử lý</p>,
+                    didOpen: async () => {
+                        MySwal.showLoading()
+                        userApi.updateProFileTeacher(`${user.id}`, formData)
+                            .then(() => {
+                                reset()
+                                MySwal.fire({
+                                    title: <p className="text-2xl">Thành công</p>,
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                })
+                            }).catch((err: any) => {
+                                MySwal.fire({
+                                    title: <p className="text-2xl">Thất bại</p>,
+                                    icon: 'error',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                })
+                            })
+                    },
+                })
+            }))} className="space-y-4 md:space-y-6" action="#">
 
                 <div className="">
                     <div className="">
@@ -142,7 +182,7 @@ const EditProfilePage = () => {
                                 >
                                     Môn học
                                 </label>
-                                <select id="subject" defaultValue="" {...registerTeacher('subject', { required: "Môn học không thể thiếu" })} className="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <select id="subject" defaultValue={getValuesTeacher().Subject} {...registerTeacher('Subject', { required: "Môn học không thể thiếu" })} className="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     <option value="">Chọn môn học</option>
 
                                     {category?.Subject?.map((sb: any, index: number) => {
@@ -151,8 +191,8 @@ const EditProfilePage = () => {
                                         )
                                     })}
                                 </select>
-                                {errorsTeacher?.subject?.message && (
-                                    <p className='mt-2 text-sm text-red-400'>{errorsTeacher.subject?.message}</p>
+                                {errorsTeacher?.Subject?.message && (
+                                    <p className='mt-2 text-sm text-red-400'>{errorsTeacher.Subject?.message}</p>
                                 )}
                             </div>
                             <div className="mb-5">
@@ -181,10 +221,10 @@ const EditProfilePage = () => {
                                         htmlFor="about"
                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >
-                                        Giới  thiệu
+                                        Giới thiệu
                                     </label>
                                     <div className="mt-2">
-                                        <TinyMceEditorComment value={''} setValue={setValueTeacher} position={'content'} />
+                                        <TinyMceEditorComment value={getValuesTeacher().biostory} setValue={setValueTeacher} position={'biostory'} />
                                     </div>
                                     <p className="mt-3 text-sm leading-6 text-gray-600">Viết một vài dòng về bản thân.</p>
                                 </div>
@@ -207,7 +247,7 @@ const EditProfilePage = () => {
                                                     formData.append(fieldName, file, file.name);
 
                                                     const request = new XMLHttpRequest();
-                                                    request.open('POST', `${process.env.NEXT_PUBLIC_BASE_URL_COURSE_LOCAL}/images`)
+                                                    request.open('POST', `${process.env.NEXT_PUBLIC_BASE_URL_COURSE_LOCAL}/images/single`)
 
                                                     request.upload.onprogress = (e) => {
                                                         progress(e.lengthComputable, e.loaded, e.total);
@@ -217,7 +257,7 @@ const EditProfilePage = () => {
 
                                                         if (request.status >= 200 && request.status < 300) {
                                                             // the load method accepts either a string (id) or an object
-
+                                                            setValueTeacher("degree", JSON.parse(request.response).url);
 
                                                             load(request.responseText);
                                                         } else {
@@ -236,6 +276,17 @@ const EditProfilePage = () => {
                                             labelIdle='Kéo & thả hoặc <span class="filepond--label-action">Tìm kiếm</span>'
                                         />
                                     </div>
+                                    {
+                                        getValuesTeacher().degree ? <div className="w-2/3 h-[240px] relative">
+                                            <Image
+                                                src={`${getValuesTeacher().degree}`}
+                                                fill={true}
+                                                className='w-full h-full absolute top-0 left-0 overflow-hidden object-cover object-center'
+                                                alt="logo"
+                                            />
+                                        </div>
+                                            : null
+                                    }
                                 </div>
 
                             </div>
@@ -262,8 +313,29 @@ const EditProfilePage = () => {
                     const formData = {
                         data: { ...data }
                     }
-                    userApi.changePasswordTeacher(formData)
-                    reset()
+                    MySwal.fire({
+                        title: <p className='text-lg'>Đang xử lý</p>,
+                        didOpen: async () => {
+                            MySwal.showLoading()
+                            userApi.changePasswordTeacher(formData)
+                                .then(() => {
+                                    reset()
+                                    MySwal.fire({
+                                        title: <p className="text-2xl">Thành công</p>,
+                                        icon: 'success',
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                    })
+                                }).catch((err: any) => {
+                                    MySwal.fire({
+                                        title: <p className="text-2xl">Thất bại</p>,
+                                        icon: 'error',
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                    })
+                                })
+                        },
+                    })
                 }))} className="space-y-4 md:space-y-6 mt-5" action="#">
 
                     <div className="">

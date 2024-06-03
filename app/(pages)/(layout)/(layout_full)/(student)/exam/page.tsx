@@ -300,35 +300,18 @@ export default function ComboList() {
                                                                 Số người đã mua: {combo?.total_registration}
                                                             </div>
                                                             <div className='grid grid-cols-2 mt-4'>
-
-
-                                                                {
-                                                                    combo?.Categories?.map((category: any, index: number) => {
-                                                                        if (category.Class) {
-                                                                            return (
-                                                                                <div key={category.id} className='flex items-center'>
-                                                                                    <span className='mr-1'>Lớp:</span>
-                                                                                    <p className='font-semibold'>{category?.Class}</p>
-                                                                                </div>
-                                                                            )
-                                                                        }
-                                                                        else if (category.Subject) {
-                                                                            return (
-                                                                                <div key={category.id} className='flex items-center'>
-                                                                                    <span className='mr-1'>Môn học:</span>
-                                                                                    <p className='font-semibold'>{category?.Subject}</p>
-                                                                                </div>
-                                                                            )
-                                                                        } else {
-                                                                            return (
-                                                                                <div key={category.id} className='flex items-center'>
-                                                                                    <span className='mr-1'>Mức độ:</span>
-                                                                                    <p className='font-semibold'>{category?.Level}</p>
-                                                                                </div>
-                                                                            )
-                                                                        }
-                                                                    })
-                                                                }
+                                                                <div className='flex items-center'>
+                                                                    <span className='mr-1'>Lớp:</span>
+                                                                    <p className='font-semibold'>{combo?.Class}</p>
+                                                                </div>
+                                                                <div className='flex items-center'>
+                                                                    <span className='mr-1'>Môn học:</span>
+                                                                    <p className='font-semibold'>{combo?.Subject}</p>
+                                                                </div>
+                                                                <div className='flex items-center'>
+                                                                    <span className='mr-1'>Mức độ:</span>
+                                                                    <p className='font-semibold'>{combo?.Level}</p>
+                                                                </div>
                                                             </div>
                                                             <div className='mt-4 grid grid-cols-2 gap-2'>
                                                                 <div className='flex items-center'>

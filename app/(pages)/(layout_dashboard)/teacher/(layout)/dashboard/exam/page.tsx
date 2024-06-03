@@ -151,18 +151,33 @@ export default function ExamDashboard() {
                                         {/* <span className="text-[20px] font-bold text-primary">{formatCash(`${exam.price}`)} VNĐ</span> */}
                                     </div>
                                     <div className="mt-auto flex items-center justify-between flex-wrap">
-                                        <div className="flex items-center flex-col mt-[20px] mr-[15px]">
-                                            <span className="text-sm text-[#818894]">Lớp:</span>
-                                            <span className="text-sm text-[#171347]">{exam.Categories[0]?.Class}</span>
-                                        </div>
-                                        <div className="flex items-center flex-col mt-[20px] mr-[15px]">
-                                            <span className="text-sm text-[#818894]">Môn học:</span>
-                                            <span className="text-sm text-[#171347]">{exam.Categories[1]?.Subject}</span>
-                                        </div>
-                                        <div className="flex items-center flex-col mt-[20px] mr-[15px]">
-                                            <span className="text-sm text-[#818894]">Mức độ:</span>
-                                            <span className="text-sm text-[#171347]">{exam.Categories[2]?.Level}</span>
-                                        </div>
+                                        {
+                                            exam?.Categories.map((category: any, index: number) => {
+                                                if (category.Class) {
+                                                    return (
+                                                        <div key={category.id} className="flex items-center flex-col mt-[20px] mr-[15px]">
+                                                            <span className="text-sm text-[#818894]">Lớp:</span>
+                                                            <span className="text-sm text-[#171347]">{category.Class}</span>
+                                                        </div>
+                                                    )
+                                                }
+                                                else if (category.Subject) {
+                                                    return (
+                                                        <div key={category.id} className="flex items-center flex-col mt-[20px] mr-[15px]">
+                                                            <span className="text-sm text-[#818894]">Môn học:</span>
+                                                            <span className="text-sm text-[#171347]">{category.Subject}</span>
+                                                        </div>
+                                                    )
+                                                } else {
+                                                    return (
+                                                        <div key={category.id} className="flex items-center flex-col mt-[20px] mr-[15px]">
+                                                            <span className="text-sm text-[#818894]">Mức độ:</span>
+                                                            <span className="text-sm text-[#171347]">{category.Level}</span>
+                                                        </div>
+                                                    )
+                                                }
+                                            })
+                                        }
                                     </div>
                                 </div>
                                 {/* <div

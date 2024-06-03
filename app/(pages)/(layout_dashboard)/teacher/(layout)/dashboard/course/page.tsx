@@ -175,7 +175,7 @@ export default function CourseDashboard() {
                                     </div>
                                     <div className="mt-auto flex items-center justify-between flex-wrap">
                                         {
-                                            course?.Categories.map((category: any, index: number) => {
+                                            course?.Categories?.map((category: any, index: number) => {
                                                 if (category.Class) {
                                                     return (
                                                         <div key={category.id} className="flex items-center flex-col mt-[20px] mr-[15px]">

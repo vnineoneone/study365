@@ -69,7 +69,7 @@ export default function CourseManageDashboard() {
             },
         },
         {
-            accessorKey: "Categories.0.Class",
+            accessorKey: "Class",
             header: ({ column }: any) => {
                 return (
                     <button
@@ -83,7 +83,7 @@ export default function CourseManageDashboard() {
             },
         },
         {
-            accessorKey: "Categories.1.Subject",
+            accessorKey: "Subject",
             header: ({ column }: any) => {
                 return (
                     <button
@@ -97,7 +97,7 @@ export default function CourseManageDashboard() {
             },
         },
         {
-            accessorKey: "Categories.2.Level",
+            accessorKey: "Level",
             header: ({ column }: any) => {
                 return (
                     <button
@@ -129,32 +129,32 @@ export default function CourseManageDashboard() {
                 )
             },
         },
-        {
-            accessorKey: "id",
-            header: ({ column }) => {
-                return (
-                    <div className=" font-semibold text-center">Tác vụ</div>
-                )
-            },
-            cell: ({ cell }) => {
-                return <div className="flex items-center justify-center">
-                    <button type="button" className="mr-[10px] text-blue-400"
-                        onClick={() => {
-                            setModal({ ...modal, [`edit_course`]: true })
-                            setSelectedStudent(cell.row.original)
-                        }}>
-                        <PencilSquareIcon className="w-6 h-6" />
-                    </button>
-                    <button type="button" className=" text-red-500">
-                        <TrashIcon className="w-6 h-6" onClick={() => {
-                            setModal({ ...modal, [`delete_course`]: true })
-                            setSelectedStudent(cell.row.original)
-                        }} />
-                    </button>
+        // {
+        //     accessorKey: "id",
+        //     header: ({ column }) => {
+        //         return (
+        //             <div className=" font-semibold text-center">Tác vụ</div>
+        //         )
+        //     },
+        //     cell: ({ cell }) => {
+        //         return <div className="flex items-center justify-center">
+        //             <button type="button" className="mr-[10px] text-blue-400"
+        //                 onClick={() => {
+        //                     setModal({ ...modal, [`edit_course`]: true })
+        //                     setSelectedStudent(cell.row.original)
+        //                 }}>
+        //                 <PencilSquareIcon className="w-6 h-6" />
+        //             </button>
+        //             <button type="button" className=" text-red-500">
+        //                 <TrashIcon className="w-6 h-6" onClick={() => {
+        //                     setModal({ ...modal, [`delete_course`]: true })
+        //                     setSelectedStudent(cell.row.original)
+        //                 }} />
+        //             </button>
 
-                </div>
-            },
-        },
+        //         </div>
+        //     },
+        // },
     ]
 
     const { user } = useAppSelector(state => state.authReducer);

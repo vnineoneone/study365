@@ -49,15 +49,15 @@ export default function CourseCard({ course }: any) {
                     <div className='grid grid-cols-2 mt-4'>
                         <div className='flex items-center'>
                             <span className='mr-1'>Lớp:</span>
-                            <p className='font-semibold'>{course?.Categories[0]?.Class}</p>
+                            <p className='font-semibold'>{course?.Class}</p>
                         </div>
                         <div className='flex items-center'>
                             <span className='mr-1'>Môn học:</span>
-                            <p className='font-semibold'>{course?.Categories[1]?.Subject}</p>
+                            <p className='font-semibold'>{course?.Subject}</p>
                         </div>
                         <div className='flex items-center'>
                             <span className='mr-1'>Mức độ:</span>
-                            <p className='font-semibold'>{course?.Categories[2]?.Level}</p>
+                            <p className='font-semibold'>{course?.Level}</p>
                         </div>
                     </div>
 

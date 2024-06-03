@@ -22,7 +22,7 @@ export default function SidebarStudent() {
                     <div className='flex flex-row items-end justify-center'>
                         <div className='relative w-24 h-24'>
                             <Image
-                                src={`${user?.avatar ? user?.avatar : "/images/avatar-teacher.png"}`}
+                                src={`${user?.avatar ? user?.avatar : "/images/avatar.png"}`}
                                 fill
                                 className='rounded-full overflow-hidden object-cover object-center'
                                 alt="logo"

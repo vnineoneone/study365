@@ -12,7 +12,7 @@ import { Dropdown } from 'flowbite-react';
 import { ExclamationCircleIcon, EllipsisVerticalIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline"
 import { Button, Modal } from 'flowbite-react';
 import { DataTable } from "@/app/_components/Table/TableFormat"
-import { columns } from "@/app/_components/Table/AssignmentColumns/columns_exam"
+import { columns } from "@/app/_components/Table/Admin/AssignmentColumns/columns_exam"
 import courseApi from "@/app/api/courseApi"
 import { useSearchParams } from "next/navigation"
 import { Controller, useForm } from "react-hook-form"

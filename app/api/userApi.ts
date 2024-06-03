@@ -56,6 +56,26 @@ const userApi = {
         await axiosConfig.put(url, data);
         return
     },
+
+    updateProFileTeacher: async (id_teacher: string, data: object) => {
+        const url = `/teacher/update/${id_teacher}`;
+        await axiosConfig.put(url, data);
+        return
+    },
+
+    changePasswordStudent: async (data: object) => {
+        const url = `/teacher/change-password`;
+
+        await axiosConfig.put(url, data);
+        return
+    },
+
+    updateProFileStudent: async (id_student: string, data: object) => {
+        const url = `/student/update/${id_student}`;
+        await axiosConfig.put(url, data);
+        return
+    },
+
     searchUser: (query: string) => {
         const url = `/commons/search?query=${query}`;
         return axiosConfig.get(url);
