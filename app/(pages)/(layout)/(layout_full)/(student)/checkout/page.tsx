@@ -39,12 +39,13 @@ export default function CheckoutPage() {
                         cartItems.map((item: any) => {
                             return (
                                 <div key={item.id} className="mt-4 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
-                                    <div className="flex flex-col rounded-lg bg-white sm:flex-row ">
-                                        <div className='relative flex-1 h-28 w-28'>
+                                    <div className="flex flex-col rounded-lg bg-white sm:flex-row justify-center items-center">
+
+                                        <div className='relative flex-1 w-32 h-20'>
                                             <Image
-                                                src={`${'/images/cousre-thumnail-1.jpg'}`}
+                                                src={`${item.thumbnail ? item.thumbnail : '/images/cousre-thumnail-1.jpg'}`}
                                                 fill
-                                                className='rounded-md overflow-hidden object-cover object-center'
+                                                className="rounded-md overflow-hidden object-cover object-center"
                                                 alt="logo"
                                             />
                                         </div>

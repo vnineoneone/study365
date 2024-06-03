@@ -94,7 +94,7 @@ export default function Cart() {
                                         </>
                                         <td className="py-4">
                                             <div className='w-full flex'>
-                                                <div className='relative w-20 h-20 mr-4'>
+                                                <div className='relative w-32 h-20 mr-4'>
                                                     <Image
                                                         src={`${item.thumbnail ? item.thumbnail : '/images/cousre-thumnail-1.jpg'}`}
                                                         fill
@@ -181,7 +181,7 @@ export default function Cart() {
                                         </h5>
                                     </td>
                                     <td className='py-8'>
-                                        <h6 className="font-manrope font-bold text-3xl lead-10 text-primary text-center">
+                                        <h6 className="font-manrope font-bold text-2xl lead-10 text-primary text-center">
                                             {formatCash(`${cartItems.reduce((total: any, item: any) => total + item.price, 0)}`)} VNĐ
                                         </h6>
                                     </td>

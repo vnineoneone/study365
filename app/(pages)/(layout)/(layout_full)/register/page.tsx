@@ -422,7 +422,7 @@ export default function RegisterPage() {
                                                         Xác nhận mật khẩu
                                                     </label>
                                                     <input
-                                                        type="confirm-password"
+                                                        type="password"
                                                         {...registerTeacher('confirmPassword', { required: "Xác nhận lại mật khẩu không thể thiếu" })}
                                                         id="confirm-passwordt"
                                                         placeholder="••••••••"

@@ -51,7 +51,7 @@ export default function ExamDashboard() {
                         return (
                             <Link href={`/exam/combo/${exam.id}/list`} key={exam.id} className="relative rounded-[10px] flex bg-white mb-8">
 
-                                <div className="h-[200px] w-[200px] relative">
+                                <div className="h-[200px] w-[300px] relative">
                                     <Image
                                         src={`${exam?.thumbnail ? exam.thumbnail : '/'}`}
                                         fill

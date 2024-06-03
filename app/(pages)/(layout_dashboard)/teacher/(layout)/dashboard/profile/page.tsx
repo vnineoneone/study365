@@ -387,7 +387,7 @@ const EditProfilePage = () => {
                                         Xác nhận mật khẩu
                                     </label>
                                     <input
-                                        type="confirm-password"
+                                        type="password"
                                         {...register('confirmPassword', { required: "Xác nhận lại mật khẩu không thể thiếu" })}
                                         id="confirm-passwordt"
                                         placeholder="••••••••"

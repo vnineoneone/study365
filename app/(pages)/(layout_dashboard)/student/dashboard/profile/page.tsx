@@ -23,7 +23,7 @@ type user = {
     name: string,
     phone: string,
     email: string,
-    subject: string
+    grade: string
 
 }
 
@@ -36,7 +36,6 @@ type password = {
 
 const EditProfilePage = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [category, setCategory] = useState<any>()
     const [info, setInfo] = useState<any>()
     const [formMethods, setFormMethods] = useState<any>()
     const [files, setFiles] = useState([])
@@ -61,8 +60,7 @@ const EditProfilePage = () => {
     })
     useEffect(() => {
         async function fetchData() {
-            await categoryApi.getAll().then((data: any) => setCategory(data)).catch((err: any) => { })
-            await userApi.getTeacherById(`${user.id}`).then((data: any) => {
+            await userApi.getStudentById(`${user.id}`).then((data: any) => {
                 setInfo(data.data)
                 Object.keys(data.data).forEach((key: any) => {
                     setValueTeacher(key, data.data[key]);
@@ -88,13 +86,12 @@ const EditProfilePage = () => {
                         categories: [data.subject],
                     }
                 }
-                console.log(formData);
 
                 MySwal.fire({
                     title: <p className='text-lg'>Đang xử lý</p>,
                     didOpen: async () => {
                         MySwal.showLoading()
-                        userApi.updateProFileTeacher(`${user.id}`, formData)
+                        userApi.updateProFileStudent(`${user.id}`, formData)
                             .then(() => {
                                 reset()
                                 MySwal.fire({
@@ -173,22 +170,19 @@ const EditProfilePage = () => {
                             </div>
                             <div className="mb-5">
                                 <label
-                                    htmlFor="subject"
+                                    htmlFor="grade"
                                     className="block mb-2 text-sm font-semibold text-[14px] text-[#171347] "
                                 >
-                                    Môn học
+                                    Lớp học
                                 </label>
-                                <select id="subject" defaultValue="" {...registerTeacher('subject', { required: "Môn học không thể thiếu" })} className="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="">Chọn môn học</option>
-
-                                    {category?.Subject?.map((sb: any, index: number) => {
-                                        return (
-                                            <option key={index} value={`${sb.id}`}>{sb.name}</option>
-                                        )
-                                    })}
+                                <select id="grade" defaultValue="" {...registerTeacher('grade', { required: "Môn học không thể thiếu" })} className="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="">Chọn lớp học</option>
+                                    <option value={10}>10</option>
+                                    <option value={11}>11</option>
+                                    <option value={12}>12</option>
                                 </select>
-                                {errorsTeacher?.subject?.message && (
-                                    <p className='mt-2 text-sm text-red-400'>{errorsTeacher.subject?.message}</p>
+                                {errorsTeacher?.grade?.message && (
+                                    <p className='mt-2 text-sm text-red-400'>{errorsTeacher.grade?.message}</p>
                                 )}
                             </div>
                             <div className="mb-5">
@@ -210,72 +204,7 @@ const EditProfilePage = () => {
                                 )}
                             </div>
                         </div>
-                        <div className=''>
-                            <div className="mt-5 mb-5">
-                                <div className="w-full">
-                                    <label
-                                        htmlFor="about"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        Giới  thiệu
-                                    </label>
-                                    <div className="mt-2">
-                                        <TinyMceEditorComment value={''} setValue={setValueTeacher} position={'content'} />
-                                    </div>
-                                    <p className="mt-3 text-sm leading-6 text-gray-600">Viết một vài dòng về bản thân.</p>
-                                </div>
-                                <div className="w-full mt-5">
-                                    <label
-                                        htmlFor="certificate"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        Bằng cấp
-                                    </label>
-                                    <div className="mt-2 w-2/3">
-                                        <FilePond
-                                            files={files}
-                                            onupdatefiles={() => setFiles}
-                                            acceptedFileTypes={['image/*']}
-                                            allowMultiple={true}
-                                            server={{
-                                                process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
-                                                    const formData = new FormData();
-                                                    formData.append(fieldName, file, file.name);
 
-                                                    const request = new XMLHttpRequest();
-                                                    request.open('POST', `${process.env.NEXT_PUBLIC_BASE_URL_COURSE_LOCAL}/images`)
-
-                                                    request.upload.onprogress = (e) => {
-                                                        progress(e.lengthComputable, e.loaded, e.total);
-                                                    };
-
-                                                    request.onload = function (res: any) {
-
-                                                        if (request.status >= 200 && request.status < 300) {
-                                                            // the load method accepts either a string (id) or an object
-
-
-                                                            load(request.responseText);
-                                                        } else {
-                                                            // Can call the error method if something is wrong, should exit after
-                                                            error('oh no');
-                                                        }
-                                                    };
-                                                    request.send(formData)
-
-                                                },
-
-                                            }
-                                            }
-
-                                            name="image"
-                                            labelIdle='Kéo & thả hoặc <span class="filepond--label-action">Tìm kiếm</span>'
-                                        />
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
                     </div>
 
 
@@ -302,7 +231,7 @@ const EditProfilePage = () => {
                         title: <p className='text-lg'>Đang xử lý</p>,
                         didOpen: async () => {
                             MySwal.showLoading()
-                            userApi.changePasswordTeacher(formData)
+                            userApi.changePasswordStudent(formData)
                                 .then(() => {
                                     reset()
                                     MySwal.fire({
@@ -372,7 +301,7 @@ const EditProfilePage = () => {
                                         Xác nhận mật khẩu
                                     </label>
                                     <input
-                                        type="confirm-password"
+                                        type="password"
                                         {...register('confirmPassword', { required: "Xác nhận lại mật khẩu không thể thiếu" })}
                                         id="confirm-passwordt"
                                         placeholder="••••••••"

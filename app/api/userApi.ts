@@ -31,6 +31,10 @@ const userApi = {
         const url = `/teacher/get-profile-teacher/${id_teacher}`;
         return axiosConfig.get(url);
     },
+    getStudentById: (id_student: string) => {
+        const url = `/student/${id_student}`;
+        return axiosConfig.get(url);
+    },
     getTeacherById: (id_teacher: string) => {
         const url = `/teacher/get-teacher-by-id/${id_teacher}`;
         return axiosConfig.get(url);
@@ -64,7 +68,7 @@ const userApi = {
     },
 
     changePasswordStudent: async (data: object) => {
-        const url = `/teacher/change-password`;
+        const url = `/student/change-password`;
 
         await axiosConfig.put(url, data);
         return
