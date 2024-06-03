@@ -69,17 +69,17 @@ export default function SidebarLearning({ course, id_course, progress }: any) {
                                                                 if (topic.type == "lecture")
                                                                     return (
                                                                         <Link href={`/course/learning/${id_course}?lecture=${topic.id}`} key={topic.id} className={`${topicId == topic.id ? 'bg-[#f1f1f1]' : 'bg-white'} px-2 py-2 mb-1 cursor-pointer flex items-center rounded-sm`}>
-                                                                            <span className='mr-3 bg-[#ececec] w-10 h-10 rounded-full flex justify-center items-center'>
+                                                                            <span className=' bg-[#ececec] w-10 h-10 rounded-full flex justify-center items-center'>
                                                                                 <FilmIcon className='w-4 h-4' />
                                                                             </span>
-                                                                            <div className='flex flex-col w-3/4'>
+                                                                            <div className='flex flex-col w-2/3 ml-2 mr-4'>
                                                                                 <span className='font-medium text-[#171347] text-ellipsis overflow-hidden whitespace-nowrap text-sm'>{topic.name}</span>
                                                                                 <span className='text-[#818894] text-xs'>{convertTime(topic.duration)}</span>
                                                                             </div>
                                                                             {progress?.progress.map((pro: any) => {
                                                                                 if (pro.id_topic === topic.id) {
                                                                                     return (
-                                                                                        <div key={`${topic.id}-progress`} className='ml-2'>
+                                                                                        <div key={`${topic.id}-progress`} className=''>
                                                                                             <span className='bg-white w-5 h-5 rounded-full flex justify-center items-center'>
 
                                                                                                 <CheckIcon className='w-4 h-4 text-primary' />
@@ -95,14 +95,26 @@ export default function SidebarLearning({ course, id_course, progress }: any) {
                                                                 else
                                                                     return (
                                                                         <Link href={`/course/learning/${id_course}/?exam=${topic.id_exam}`} key={topic.id} className={`${topicId == topic.id_exam ? 'bg-[#f1f1f1]' : 'bg-white'} px-2 py-2 mb-1 cursor-pointer flex items-center rounded-sm`}>
-                                                                            <span className='mr-3 bg-[#ececec] w-10 h-10 rounded-full flex justify-center items-center'>
+                                                                            <span className='bg-[#ececec] w-10 h-10 rounded-full flex justify-center items-center'>
                                                                                 <DocumentIcon className='w-4 h-4' />
                                                                             </span>
-                                                                            <div className='flex flex-col w-2/3'>
+                                                                            <div className='flex flex-col w-2/3 ml-2 mr-4'>
                                                                                 <span className='font-medium text-[#171347] text-ellipsis overflow-hidden whitespace-nowrap'>{topic.name}</span>
                                                                                 <span className='text-[#818894] text-xs'>{topic.exam?.data.quantity_question} câu</span>
                                                                             </div>
+                                                                            {progress?.progress.map((pro: any) => {
+                                                                                if (pro.id_topic === topic.id) {
+                                                                                    return (
+                                                                                        <div key={`${topic.id}-progress`} className=''>
+                                                                                            <span className='bg-white w-5 h-5 rounded-full flex justify-center items-center'>
 
+                                                                                                <CheckIcon className='w-4 h-4 text-primary' />
+
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    )
+                                                                                }
+                                                                            })}
                                                                         </Link>
                                                                     )
                                                             })

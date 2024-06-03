@@ -42,6 +42,7 @@ export default function ResultExam({ params }: { params: { slug: string, id_assi
     }, [params.id_assignment]);
 
 
+
     let listQuestion;
     let listNumber;
     if (assignment.id) {
@@ -210,7 +211,7 @@ export default function ResultExam({ params }: { params: { slug: string, id_assi
                                     boxShadow: '1px 2px 4px 0px #00000040 -1px -2px 4px 0px #00000040 inset',
                                 }}
                             >
-                                {assignment?.score.toFixed(1)}
+                                {(assignment?.score || 0).toFixed(1)}
                             </div>
                             <div className="flex">
                                 <div className="flex flex-col justify-between mr-4">
@@ -239,15 +240,13 @@ export default function ResultExam({ params }: { params: { slug: string, id_assi
                         }}>
                             <div className="text-lg text-[#000] font-semibold">Đáp án</div>
                             <div className='mt-2'>{listQuestion}
-                                <div className='mt-2'>{listQuestion}
-                                    <div className={`${assignment?.comment != '' ? '' : 'hidden'} mt-5`}>
-                                        <h3 className='text-secondary font-bold text-xl'>Nhận xét của giáo viên</h3>
-                                        <div className='border-slate-300 border-[1px] p-4 rounded-lg mt-2'>
-                                            {parse(assignment?.comment || '')}
-                                        </div>
+                                <div className={`${assignment?.comment != '' ? '' : 'hidden'} mt-5`}>
+                                    <h3 className='text-secondary font-bold text-xl'>Nhận xét của giáo viên</h3>
+                                    <div className='border-slate-300 border-[1px] p-4 rounded-lg mt-2'>
+                                        {parse(assignment?.comment || '')}
                                     </div>
-
                                 </div>
+
                             </div>
                         </div>
                     </div>

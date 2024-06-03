@@ -30,7 +30,7 @@ export function HeaderLearning({ course, progress, params }: any) {
                                 <div className="bg-yellow-300 h-2.5 rounded-full" style={{ width: `${progress?.percentage}` }} />
                             </div>
                         </div>
-                        <span className='ml-3 font-medium text-[#818894]'>Hoàn thành {progress?.percentage}</span>
+                        <span className='ml-3 font-medium text-[#818894]'>Hoàn thành {progress?.percentage || 0}</span>
                     </div>
                 </div>
             </div>
