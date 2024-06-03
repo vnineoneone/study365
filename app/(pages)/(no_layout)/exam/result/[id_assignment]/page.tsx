@@ -15,9 +15,10 @@ export default function ResultExam({ params }: { params: { id_assignment: string
     const [open, setOpen] = useState(false);
     const [assignment, setAssignment] = useState<any>({})
     const [details, setDetails] = useState<any>([])
+    const [comboId, setComboId] = useState('')
     const [openSidebar, setOpenSideBar] = useState(true);
     const alphabet = ['A', 'B', 'C', 'D', 'E', 'F'];
-    
+
     const [toggle, setToggle] = useState<any>({})
     const {
         register,
@@ -31,12 +32,14 @@ export default function ResultExam({ params }: { params: { id_assignment: string
         async function fetchData() {
             examApi.getDetailAssigmnent(params.id_assignment).then((data) => {
                 setAssignment(data.data);
-                setDetails(data.data.details.sort((a: any, b: any) => a.order - b.order).map((detail: any) => {
+                setComboId(data.data?.combo[0]?.id);
+                setDetails(data.data.details?.sort((a: any, b: any) => a.order - b.order).map((detail: any) => {
                     return {
                         ...detail,
                         Answers: detail.Answers.sort((a: any, b: any) => a.selected_answer.order - b.selected_answer.order)
                     };
                 }));
+
             })
         }
         fetchData()
@@ -189,6 +192,8 @@ export default function ResultExam({ params }: { params: { id_assignment: string
             }
         });
     }
+
+
 
     return (
         <div className="bg-[#FBFAF9] relative pt-10">
@@ -351,7 +356,7 @@ export default function ResultExam({ params }: { params: { id_assignment: string
                             <p className="rounded-md text-center font-medium text-lg text-[#153462] mb-5">Điều hướng bài kiểm tra</p>
                             <div className="grid grid-cols-5 justify-items-center gap-y-3">{listNumber}</div>
                             <div className="text-center mt-10 mb-2">
-                                <Link href={`exam/combo/${assignment.combo[0]?.id}/list?exam=${assignment.id_exam}`}>
+                                <Link href={`/exam/combo/${comboId}/list?exam=${assignment?.id_exam}`}>
                                     <button
                                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                         onClick={() => {

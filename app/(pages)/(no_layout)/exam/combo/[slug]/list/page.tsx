@@ -79,7 +79,7 @@ export default function ExamDetail({ params }: { params: { slug: string } }) {
                                             />
                                         </div>
                                         <div className="h-28 pr-10">
-                                            <div className='text-[#818894] text-2xl'>{currExam?.title}</div>
+                                            <div className='text-[#818894] text-xl'>{currExam?.title}</div>
                                             <div>
                                                 <span className="mr-2">
                                                     Thời gian: {currExam?.period} phút
@@ -179,12 +179,11 @@ export default function ExamDetail({ params }: { params: { slug: string } }) {
                                                 setCurrExam(combo)
                                                 setExamId(combo.id)
                                             }} key={combo.id} href={`/exam/combo/${params.slug}/list?exam=${combo.id}`}>
-                                                <li className='bg-white py-2 px-4 rounded-lg mb-2 list-none border-[1px] border-slate-300 hover:bg-slate-100'>
-                                                    <div className={`flex items-center justify-between ${toggle[`open_chapter_${combo.id}`] ? 'pb-2 border-b-[1px] border-slate-200' : ''}`}>
-                                                        <div className="flex justify-between items-center">
-                                                            <div className="">
-
-                                                                <div className="font-bold text-[rgb(23,19,71)] text-lg text-ellipsis overflow-hidden whitespace-nowrap ">
+                                                <li className='bg-white py-2 px-4 overflow-hidden rounded-lg mb-2 list-none border-[1px] border-slate-300 hover:bg-slate-100'>
+                                                    <div className={`flex items-center justify-between ${toggle[`open_chapter_${combo.id}`] ? 'pb-2 border-b-[1px] border-slate-200' : ''}  w-full overflow-hidden`}>
+                                                        <div className="flex justify-between items-center overflow-hidden">
+                                                            <div className="overflow-hidden">
+                                                                <div className="font-semibold text-[rgb(23,19,71)] text-ellipsis overflow-hidden whitespace-nowrap">
                                                                     {combo.title}
                                                                 </div>
                                                                 <div className="font-normal text-[818894] text-xs">
