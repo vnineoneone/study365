@@ -12,10 +12,13 @@ import { useSearchParams } from 'next/navigation';
 import { Dropdown } from 'flowbite-react';
 import { useAppSelector } from '@/redux/store';
 import courseApi from '@/app/api/courseApi';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
+const MySwal = withReactContent(Swal)
 
 export default function DiscountDashboard({ params }: { params: { slug: string } }) {
-    const [discounts, setDiscounts] = useState<any>()
+    const [discounts, setDiscounts] = useState<any>([])
     const [modal, setModal] = useState<any>({})
     const [change, setChange] = useState(false)
     const [content, setContent] = useState<any>('')
@@ -57,7 +60,11 @@ export default function DiscountDashboard({ params }: { params: { slug: string }
     return (
         <div className='w-full'>
             <>
-                <Modal show={modal[`add-discount`] || false} size="xl" onClose={() => setModal({ ...modal, [`add-discount`]: false })} popup>
+                <Modal show={modal[`add-discount`] || false} size="xl" onClose={() => {
+                    setModal({ ...modal, [`add-discount`]: false })
+                    reset()
+
+                }} popup>
                     <Modal.Header />
                     <Modal.Body>
                         <form className="space-y-6" onSubmit={handleSubmit(async (data: any) => {
@@ -79,12 +86,29 @@ export default function DiscountDashboard({ params }: { params: { slug: string }
                                 expire: data.end_time,
                                 courses: [data.courses]
                             }
-
-                            await discountApi.create(dataForm).then(() => {
-
-                            }).catch((err: any) => { })
-
-                            setChange(!change)
+                            MySwal.fire({
+                                title: <p className='text-lg'>Đang xử lý</p>,
+                                didOpen: async () => {
+                                    MySwal.showLoading()
+                                    await discountApi.create(dataForm)
+                                        .then(() => {
+                                            setChange(!change)
+                                            MySwal.fire({
+                                                title: <p className="text-2xl">Tạo khuyến mãi thành công</p>,
+                                                icon: 'success',
+                                                showConfirmButton: false,
+                                                timer: 1000
+                                            })
+                                        }).catch((err: any) => {
+                                            MySwal.fire({
+                                                title: <p className="text-2xl">Tạo khuyến mãi thất bại</p>,
+                                                icon: 'error',
+                                                showConfirmButton: false,
+                                                timer: 1000
+                                            })
+                                        })
+                                },
+                            })
                             reset()
                             setModal({ ...modal, [`add-discount`]: false })
                         })}>
@@ -223,7 +247,7 @@ export default function DiscountDashboard({ params }: { params: { slug: string }
             </>
 
             <div>
-                <div className="font-bold text-[#171347] text-lg">Khuyến mãi của tôi</div>
+                <div className="font-bold text-[#171347] text-lg">Danh sách khuyến mãi</div>
                 <button type="button" onClick={() => {
                     setModal({ ...modal, [`add-discount`]: true })
 
@@ -252,36 +276,9 @@ export default function DiscountDashboard({ params }: { params: { slug: string }
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
 
-                                        {discounts?.map((item: any) => (
+                                        {discounts && discounts?.length != 0 ? discounts?.map((item: any) => (
                                             <tr key={item.id} className="hover:bg-gray-100 dark:hover:bg-neutral-700">
                                                 <>
-                                                    <Modal show={modal[`delete-discount${item.id}`] || false} size="md" onClose={() => setModal({ ...modal, [`delete-discount${item.id}`]: false })} popup>
-                                                        <Modal.Header />
-                                                        <Modal.Body>
-                                                            <form className="space-y-6" onSubmit={async (e) => {
-                                                                e.preventDefault()
-                                                                await discountApi.delete(item.id).catch((err: any) => { })
-                                                                setChange(!change)
-                                                                setModal(false)
-                                                            }}>
-                                                                <ExclamationCircleIcon className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                                                                <h3 className="mb-5 text-lg font-normal text-center text-gray-500 dark:text-gray-400">
-                                                                    Bạn có chắc muốn xóa khuyến mãi này?
-                                                                </h3>
-                                                                <div className="flex justify-center gap-4">
-                                                                    <Button color="failure" type='submit'>
-                                                                        Xóa
-                                                                    </Button>
-                                                                    <Button color="gray" onClick={() => {
-                                                                        setModal({ ...modal, [`delete-discount${item.id}`]: false })
-                                                                    }}>
-                                                                        Hủy
-                                                                    </Button>
-                                                                </div>
-                                                            </form>
-                                                        </Modal.Body>
-                                                    </Modal>
-
                                                     <Modal show={modal[`edit-discount${item.id}`] || false} size="xl" onClose={() => setModal({ ...modal, [`edit-discount${item.id}`]: false })} popup>
                                                         <Modal.Header />
                                                         <Modal.Body>
@@ -303,12 +300,32 @@ export default function DiscountDashboard({ params }: { params: { slug: string }
                                                                     expire: data.end_time,
                                                                     courses: [data.courses]
                                                                 }
+                                                                MySwal.fire({
+                                                                    title: <p className='text-lg'>Đang xử lý</p>,
+                                                                    didOpen: async () => {
+                                                                        MySwal.showLoading()
+                                                                        await discountApi.update(dataForm, item.id)
+                                                                            .then(() => {
+                                                                                setChange(!change)
+                                                                                MySwal.fire({
+                                                                                    title: <p className="text-2xl">Cập nhập khuyến mãi thành công</p>,
+                                                                                    icon: 'success',
+                                                                                    showConfirmButton: false,
+                                                                                    timer: 1000
+                                                                                })
+                                                                            }).catch((err: any) => {
+                                                                                MySwal.fire({
+                                                                                    title: <p className="text-2xl">Cập nhập khuyến mãi thất bại</p>,
+                                                                                    icon: 'error',
+                                                                                    showConfirmButton: false,
+                                                                                    timer: 1000
+                                                                                })
+                                                                            })
+                                                                    },
+                                                                })
 
-                                                                await discountApi.update(dataForm, item.id).then(() => {
 
-                                                                }).catch((err: any) => { })
 
-                                                                setChange(!change)
                                                                 reset()
                                                                 setModal({ ...modal, [`edit-discount${item.id}`]: false })
                                                             })}>
@@ -345,7 +362,7 @@ export default function DiscountDashboard({ params }: { params: { slug: string }
                                                                     <Controller
                                                                         control={control}
                                                                         name="courses"
-                                                                        defaultValue={item.Courses[0].id}
+                                                                        defaultValue={item.Courses[0]?.id}
                                                                         rules={{ required: "Lớp học không thể trống" }}
                                                                         render={({ field }) => (
                                                                             <select id="courses" {...field} className="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -452,7 +469,7 @@ export default function DiscountDashboard({ params }: { params: { slug: string }
 
                                                 </>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-800 dark:text-neutral-200">{item.name}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{item.Courses[0]?.name}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{item.Courses[0]?.name || 'Khóa học đã bị xóa'}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{item.percent}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{(new Date(item.expire).getTime()) > Date.now() ? "Đang diễn ra" : "Hết hạn"}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{formatDateTime(item.createdAt)}</td>
@@ -464,11 +481,50 @@ export default function DiscountDashboard({ params }: { params: { slug: string }
                                                         >
                                                             Sửa
                                                         </Dropdown.Item>
-                                                        <Dropdown.Item><button type="button" className="text-red-600" onClick={() => setModal({ ...modal, [`delete-discount${item.id}`]: true })}>Xóa</button></Dropdown.Item>
+                                                        <Dropdown.Item><button type="button" className="text-red-600" onClick={() => {
+                                                            MySwal.fire({
+                                                                title: <p className="text-2xl">Bạn có chắc muốn xóa khuyến mãi này?</p>,
+                                                                icon: "warning",
+                                                                showCancelButton: true,
+                                                                confirmButtonColor: "#3085d6",
+                                                                cancelButtonColor: "#d33",
+                                                                confirmButtonText: "Xóa",
+                                                                cancelButtonText: "Hủy",
+                                                            }).then((result) => {
+                                                                if (result.isConfirmed) {
+                                                                    MySwal.fire({
+                                                                        title: <p className='text-lg'>Đang xử lý</p>,
+                                                                        didOpen: async () => {
+                                                                            MySwal.showLoading()
+                                                                            await discountApi.delete(item.id).then(() => {
+                                                                                MySwal.close()
+
+                                                                                MySwal.fire({
+                                                                                    title: <p className="text-2xl">Khuyến mãi đã được xóa tạo thành công</p>,
+                                                                                    icon: 'success',
+                                                                                    showConfirmButton: false,
+                                                                                    timer: 1500
+                                                                                })
+                                                                                setChange(!change)
+                                                                            }).catch((err: any) => {
+                                                                                MySwal.close()
+                                                                                MySwal.fire({
+                                                                                    title: <p className="text-2xl">Xóa Khuyến mãi thất bại</p>,
+                                                                                    icon: 'error',
+                                                                                    showConfirmButton: false,
+                                                                                    timer: 1500
+                                                                                })
+                                                                            })
+                                                                        },
+                                                                    })
+
+                                                                }
+                                                            })
+                                                        }}> Xóa</button></Dropdown.Item>
                                                     </Dropdown>
                                                 </td>
                                             </tr>
-                                        ))}
+                                        )) : <tr><td colSpan={7} className="text-center py-8">Không có dữ liệu</td></tr>}
 
                                     </tbody>
                                 </table>

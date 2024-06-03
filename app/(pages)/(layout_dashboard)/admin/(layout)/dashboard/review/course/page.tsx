@@ -9,7 +9,7 @@ import userApi from "@/app/api/userApi"
 import courseApi from "@/app/api/courseApi";
 
 
-export default function AssignmentDashboard() {
+export default function CourseReview() {
 
     const user = useAppSelector(state => state.authReducer.user);
     const [reviews, setReviews] = useState<any>([])
@@ -30,10 +30,10 @@ export default function AssignmentDashboard() {
     };
     useEffect(() => {
         async function fetchData() {
-            await courseApi.getAllByTeacher(`${user.id}`, '1').then((data: any) => {
+            await courseApi.getAll('', '1').then((data: any) => {
                 setCourses(data.data.courses)
             }).catch((err: any) => { })
-            await courseApi.getAllReviewAdmin(`${page}`).then((data: any) => {
+            await courseApi.getAllReviewAdmin('1').then((data: any) => {
                 setReviews(data.data)
             }).catch((err: any) => { })
         }
@@ -89,7 +89,7 @@ export default function AssignmentDashboard() {
                 </form>
             </div>
             <div className="mt-5">
-                <div className="font-bold text-[#171347] text-lg">Đánh giá của tôi</div>
+                <div className="font-bold text-[#171347] text-lg">Danh sách đánh giá</div>
                 <div className="container mx-auto rounded-lg mt-4">
                     <DataTable columns={columns} data={reviews} page={page} setPage={setPage} pageCount={pageCount} />
                 </div>

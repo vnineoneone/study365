@@ -8,25 +8,19 @@ import { useSearchParams } from "next/navigation"
 import userApi from "@/app/api/userApi"
 
 
-export default function AssignmentDashboard() {
+export default function TeacherReview() {
 
     const user = useAppSelector(state => state.authReducer.user);
     const [reviews, setReviews] = useState<any>([])
     const [page, setPage] = useState(1)
     const [pageCount, setPageCount] = useState(1)
-    const [courses, setCourses] = useState<any>([])
     const searchParams = useSearchParams();
     const queries = Object.fromEntries(searchParams.entries());
     let filterString = ''
     for (const key of Object.keys(queries)) {
         filterString += `${key}=${queries[key]}&`
     }
-    const [selectedCourseId, setSelectedCourseId] = useState(
-        searchParams.get('id_course') || ''
-    );
-    const handleCourseChange = (event: any) => {
-        setSelectedCourseId(event.target.value);
-    };
+
     useEffect(() => {
         async function fetchData() {
             await userApi.getReviewOfTeacher(`${user.id}`, page).then((data: any) => {
@@ -41,7 +35,7 @@ export default function AssignmentDashboard() {
         <div>
             <div>
                 <div className="font-bold text-[#171347] text-lg">Lọc kết quả</div>
-                <form className="p-5 bg-white mt-4 rounded-lg flex justify-between items-center">
+                <form className="p-5 bg-white mt-4 rounded-lg flex justify-between items-center w-2/3">
                     <div>
                         <div className="flex items-center">
                             <div className="">
@@ -69,7 +63,7 @@ export default function AssignmentDashboard() {
                 </form>
             </div>
             <div className="mt-5">
-                <div className="font-bold text-[#171347] text-lg">Đánh giá của tôi</div>
+                <div className="font-bold text-[#171347] text-lg">Danh sách đánh giá</div>
                 <div className="container mx-auto rounded-lg mt-4">
                     <DataTable columns={columns} data={reviews} page={page} setPage={setPage} pageCount={pageCount} />
                 </div>

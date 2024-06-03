@@ -89,7 +89,6 @@ export const loginAdmin = createAsyncThunk('admin/login', async (user: LogInData
 })
 
 export const signout = createAsyncThunk('/auth/signout', async (arg, thunkAPI) => {
-    console.log(2);
 
     try {
         localStorage.removeItem('user');

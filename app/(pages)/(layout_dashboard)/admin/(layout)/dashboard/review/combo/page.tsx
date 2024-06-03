@@ -1,21 +1,19 @@
 "use client"
-
 import { useEffect, useState } from "react"
 import { useAppSelector } from "@/redux/store";
+import { convertToVietnamTime, formatCash } from "@/app/helper/FormatFunction"
 import { DataTable } from "@/app/_components/Table/TableFormat"
-import { columns } from "@/app/_components/Table/ReviewColumns/course_columns"
+import { columns } from "@/app/_components/Table/ReviewColumns/combo_columns"
+import examApi from "@/app/api/examApi"
 import { useSearchParams } from "next/navigation"
-import userApi from "@/app/api/userApi"
-import courseApi from "@/app/api/courseApi";
 
 
-export default function CourseReview() {
-
+export default function ComboReview() {
     const user = useAppSelector(state => state.authReducer.user);
     const [reviews, setReviews] = useState<any>([])
     const [page, setPage] = useState(1)
     const [pageCount, setPageCount] = useState(1)
-    const [courses, setCourses] = useState<any>([])
+    const [exams, setExams] = useState<any>([])
     const searchParams = useSearchParams();
     const queries = Object.fromEntries(searchParams.entries());
     let filterString = ''
@@ -23,23 +21,25 @@ export default function CourseReview() {
         filterString += `${key}=${queries[key]}&`
     }
     const [selectedCourseId, setSelectedCourseId] = useState(
-        searchParams.get('id_course') || ''
+        searchParams.get('id_exam') || ''
     );
     const handleCourseChange = (event: any) => {
         setSelectedCourseId(event.target.value);
     };
     useEffect(() => {
         async function fetchData() {
-            await courseApi.getAllByTeacher(`${user.id}`, '1').then((data: any) => {
-                setCourses(data.data.courses)
+            await examApi.getAllCombo('1', '').then((data: any) => {
+                setExams(data.data.combos)
             }).catch((err: any) => { })
-            await courseApi.getAllReview(`${user.id}`).then((data: any) => {
+            await examApi.getAllReviewCombo().then((data: any) => {
                 setReviews(data.data)
             }).catch((err: any) => { })
         }
         fetchData()
     }, [page, user.id]);
 
+
+    console.log(reviews);
 
     return (
         <div>
@@ -59,13 +59,13 @@ export default function CourseReview() {
                         </div>
                     </div>
                     <div>
-                        {courses.length > 0 ? (
-                            <select id="id_course" defaultValue={selectedCourseId} onChange={handleCourseChange} name="id_course" className="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="">Chọn khóa học</option>
+                        {exams?.length > 0 ? (
+                            <select id="id_exam" defaultValue={selectedCourseId} onChange={handleCourseChange} name="id_exam" className="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="">Chọn combo đề thi</option>
 
-                                {courses?.map((course: any, index: number) => {
+                                {exams?.map((exam: any, index: number) => {
                                     return (
-                                        <option key={course.id} value={`${course.id}`}>{course.name}</option>
+                                        <option key={exam.id} value={`${exam.id}`}>{exam.name}</option>
                                     )
                                 })}
                             </select>

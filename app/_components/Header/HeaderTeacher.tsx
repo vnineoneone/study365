@@ -76,7 +76,7 @@ export default function HeaderTeacher() {
 
         }
         fetchData()
-    }, [user]);
+    }, [socketChat, user]);
 
     const fetchNotifications = async (pageNum: number) => {
         // Fetch notifications from API here

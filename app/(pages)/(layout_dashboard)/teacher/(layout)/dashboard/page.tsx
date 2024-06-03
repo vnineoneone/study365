@@ -76,9 +76,9 @@ export default function TeacherDashboard() {
                     </div>
                 </CardDataStats>
             </div>
-            <div className="bg-white px-9 py-3 rounded-md shadow-md relative mb-20 mt-32">
+            <div className="bg-white px-9 py-3 rounded-md shadow-md relative mb-20 mt-40">
                 <div className="text-primary text-3xl font-semibold">
-                    Xin chào Mai Văn A,
+                    Xin chào {user.name},
                 </div>
                 <h2 className="text-secondary font-semibold text-lg mt-2">
                     Bạn có sự kiện mới:

@@ -11,11 +11,16 @@ import categoryApi from '@/app/api/category';
 import examApi from '@/app/api/examApi';
 import { columns } from '@/app/_components/Table/KnowledgeColumns/columns';
 import { DataTable } from "@/app/_components/Table/TableFormat"
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 export default function CreateKnowledge() {
     const [modal, setModal] = useState<any>({})
     const searchParams = useSearchParams()
     const [knowledges, setKnowledges] = useState<any>([])
+    const [change, setChange] = useState(false)
 
     const [page, setPage] = useState(1)
     const [pageCount, setPageCount] = useState(1)
@@ -46,7 +51,7 @@ export default function CreateKnowledge() {
             }).catch((err: any) => { })
         }
         fetchData()
-    }, []);
+    }, [change]);
 
     return (
         <div>
@@ -79,9 +84,33 @@ export default function CreateKnowledge() {
                             }]
                         }
 
-                        await examApi.createKnowledge(dataForm).then(() => {
 
-                        }).catch((err: any) => { })
+                        MySwal.fire({
+                            title: <p className='text-lg'>Đang xử lý</p>,
+                            didOpen: async () => {
+                                MySwal.showLoading()
+                                await examApi.createKnowledge(dataForm).then(() => {
+                                    MySwal.fire({
+                                        title: <p className="text-2xl">Danh mục kiến thức đã được tạo thành công</p>,
+                                        icon: 'success',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    setModal({ ...modal, [`add-discount`]: false })
+                                    reset()
+                                    setChange(!change)
+                                }).catch(() => {
+                                    MySwal.fire({
+                                        title: <p className="text-2xl">Tạo danh mục kiến thức thất bại</p>,
+                                        icon: 'error',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                }
+                                )
+
+                            },
+                        })
 
                     })}>
 

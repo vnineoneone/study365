@@ -19,6 +19,14 @@ const userApi = {
         return axiosConfig.get(url);
     },
 
+    getAllReviewTeacher: (page: number) => {
+        const url = `/reviews`;
+        return axiosConfig.get(url, {
+            baseURL: `${process.env.NEXT_PUBLIC_BASE_URL_LOCAL}`
+        });
+    },
+
+    ////
     getProfileTeacher: (id_teacher: string) => {
         const url = `/teacher/get-profile-teacher/${id_teacher}`;
         return axiosConfig.get(url);

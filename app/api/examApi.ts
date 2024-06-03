@@ -2,6 +2,33 @@ import axiosConfig from "@/redux/axios.config"
 require('dotenv').config();
 
 const examApi = {
+    //admin 
+    getAllExam: (page: string) => {
+        const url = `/exams/page/${page}?exam=true`;
+        return axiosConfig.get(url);
+    },
+
+    getAllReviewExam: () => {
+        const url = `/reviews`;
+        return axiosConfig.get(url, {
+            baseURL: `${process.env.NEXT_PUBLIC_BASE_URL_EXAM_LOCAL}`
+        });
+    },
+    getAllReviewCombo: () => {
+        const url = `/reviews/combo`;
+        return axiosConfig.get(url, {
+            baseURL: `${process.env.NEXT_PUBLIC_BASE_URL_EXAM_LOCAL}`
+        });
+    },
+
+    getAllAssigmnent: async (page: number, filterString: string) => {
+        const url = `/assignments/page/${page}?${filterString}exam=true`;
+        return await axiosConfig.get(url);
+    },
+
+
+
+    //
     getAllExamByTeacher: (id_teacher: string, page: string) => {
         const url = `/exams/teacher/${id_teacher}/page/${page}?exam=true`;
         return axiosConfig.get(url);

@@ -4,11 +4,22 @@ require('dotenv').config();
 const courseApi = {
     // admin
 
+    getAllReviewAdmin: (page: string) => {
+        const url = `/reviews`;
+        return axiosConfig.get(url, {
+            baseURL: `${process.env.NEXT_PUBLIC_BASE_URL_COURSE_LOCAL}`
+        });
+    },
+
+
+    //   
+
     getAllByTeacher: (id_teacher: string, page: string) => {
         if (page == null) page = '1'
-        const url = `/courses/teacher/${id_teacher}/page/${page}`;
+        const url = `/courses/teacher/${id_teacher}/page=${page}`;
         return axiosConfig.get(url);
     },
+
 
     getAll: (filterString: string, page: string) => {
         const url = `/courses/page/${page}?${filterString}`;
@@ -97,12 +108,6 @@ const courseApi = {
         });
     },
 
-    getAllReviewAdmin: (page: string) => {
-        const url = `/reviews`;
-        return axiosConfig.get(url, {
-            baseURL: `${process.env.NEXT_PUBLIC_BASE_URL_COURSE_LOCAL}`
-        });
-    },
 
     getCommentByTopic: (id: string, page: number) => {
         const url = `/comments/topic/${id}/page/${page}`;

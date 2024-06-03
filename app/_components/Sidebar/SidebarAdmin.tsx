@@ -24,7 +24,7 @@ export default function SidebarTeacher() {
                     <div className='flex flex-row items-end justify-center'>
                         <div className='relative w-24 h-24'>
                             <Image
-                                src={`${user?.avatar ? user?.avatar : "/images/avatar-teacher.png"}`}
+                                src={`${user?.avatar ? user?.avatar : "/images/avatar.png"}`}
                                 fill
                                 className='rounded-full overflow-hidden object-cover object-center'
                                 alt="logo"
@@ -100,7 +100,7 @@ export default function SidebarTeacher() {
                                     </li>
                                 </ul>
                             </li>
-                            <li>
+                            {/* <li>
                                 <button
                                     type="button"
                                     className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -151,6 +151,14 @@ export default function SidebarTeacher() {
                                         </Link>
                                     </li>
                                 </ul>
+                            </li> */}
+                            <li>
+                                <Link
+                                    href="/admin/dashboard/course"
+                                    className={`${pathname == '/admin/dashboard/course' ? 'bg-slate-100' : ''} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
+                                >
+                                    <span className="ms-3">Danh sách khóa học</span>
+                                </Link>
                             </li>
                             <li>
                                 <button
@@ -212,6 +220,17 @@ export default function SidebarTeacher() {
 
                                         </Link>
                                     </li>
+                                    <li>
+                                        <Link
+                                            href="/admin/dashboard/exam/knowledge"
+                                            className={`${pathname == '/teacher/dashboard/exam/knowledge' ? 'bg-slate-100' : ''} ml-4 flex items-center p-2 text-gray-900 transition duration-75 rounded-lg pl-2 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`}
+                                        >
+                                            <div className='ml-2'>
+                                                Danh mục kiến thức
+                                            </div>
+
+                                        </Link>
+                                    </li>
                                 </ul>
                             </li>
 
@@ -266,6 +285,17 @@ export default function SidebarTeacher() {
                                     </li>
                                     <li>
                                         <Link
+                                            href="/admin/dashboard/review/combo"
+                                            className={`${pathname == '/admin/dashboard/review/combo' ? 'bg-slate-100' : ''} ml-4 flex items-center p-2 text-gray-900 transition duration-75 rounded-lg pl-2 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`}
+                                        >
+                                            <div className='ml-2'>
+                                                Đánh giá combo đề thi
+                                            </div>
+
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
                                             href="/admin/dashboard/review/exam"
                                             className={`${pathname == '/admin/dashboard/review/exam' ? 'bg-slate-100' : ''} ml-4 flex items-center p-2 text-gray-900 transition duration-75 rounded-lg pl-2 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`}
                                         >
@@ -280,14 +310,14 @@ export default function SidebarTeacher() {
 
 
 
-                            <li>
+                            {/* <li>
                                 <Link
                                     href="/admin/dashboard/notifycation"
                                     className={`${pathname == '/admin/dashboard/notifycation' ? 'bg-slate-100' : ''} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
                                 >
                                     <span className="ms-3">Danh sách thông báo</span>
                                 </Link>
-                            </li>
+                            </li> */}
                             <li>
                                 <Link
                                     href="/admin/dashboard/discount"

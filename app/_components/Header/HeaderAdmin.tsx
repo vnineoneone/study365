@@ -19,6 +19,10 @@ import MessageBox from '../MessageBox/MessageBox';
 import chatApi from '@/app/api/chatApi';
 import { useSocket } from '@/app/socket/SocketProvider';
 import { Bounce, toast } from 'react-toastify';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 
 export default function HeaderAdmin() {
@@ -117,7 +121,7 @@ export default function HeaderAdmin() {
                     {
                         isAuth && user ?
                             <div className="flex items-center lg:order-2">
-                                <div className='mr-3'>
+                                {/* <div className='mr-3'>
                                     <button
                                         id="dropdownChatButton"
                                         data-dropdown-toggle="dropdownChat"
@@ -135,9 +139,8 @@ export default function HeaderAdmin() {
                                         <ChatBubbleLeftIcon className='w-6 h-6' />
                                         <div className="absolute block w-3 h-3 bg-red-500 border-2 border-white rounded-full -top-0 start-3 dark:border-gray-900" />
                                     </button>
-                                    {/* Dropdown menu */}
                                     <MessageBox conversations={conversations} user={user} />
-                                </div>
+                                </div> */}
 
                                 {/* <div className='mr-5'>
                                     <button
@@ -389,6 +392,24 @@ export default function HeaderAdmin() {
                                                 onClick={async () => {
                                                     dispatch(signout())
 
+                                                    MySwal.fire({
+                                                        title: <p className='text-lg'>Đang xử lý</p>,
+                                                        didOpen: async () => {
+                                                            MySwal.showLoading()
+
+                                                            MySwal.fire({
+                                                                title: <p className="text-2xl">Đăng xuất thành công</p>,
+                                                                icon: 'success',
+                                                                showConfirmButton: false,
+                                                                timer: 1000
+                                                            }).then(() => {
+                                                                router.push('/')
+
+                                                            })
+
+
+                                                        },
+                                                    })
                                                 }}
                                                 className="w-full text-left block py-2 px-4 text-sm text-[#f63c3c] hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                             >

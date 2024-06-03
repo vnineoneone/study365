@@ -183,7 +183,7 @@ export default function SidebarTeacher() {
 
                                         </Link>
                                     </li>
-                                    <li>
+                                    {/* <li>
                                         <Link
                                             href="/teacher/dashboard/exam/knowledge"
                                             className={`${pathname == '/teacher/dashboard/exam/knowledge' ? 'bg-slate-100' : ''} ml-4 flex items-center p-2 text-gray-900 transition duration-75 rounded-lg pl-2 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700`}
@@ -193,7 +193,7 @@ export default function SidebarTeacher() {
                                             </div>
 
                                         </Link>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </li>
                             <li>

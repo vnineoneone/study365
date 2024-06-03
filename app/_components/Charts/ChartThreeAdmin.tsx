@@ -51,7 +51,7 @@ const options: ApexOptions = {
   ,
 };
 
-export default function ChartThree() {
+export default function ChartThreeAdmin() {
   const [state, setState] = useState<any>({
     series: [{
       name: 'Tổng lượt mua',
@@ -79,12 +79,12 @@ export default function ChartThree() {
             Biểu đồ tổng lượt mua và doanh thu
           </h5>
         </div>
-        <div>
+        {/* <div>
           <select id="courses" name="course" className="w-full bg-white border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
             <option value="" defaultChecked>Chọn khóa học</option>
             <option value="all_course" >Tất cả khóa học</option>
           </select>
-        </div>
+        </div> */}
       </div>
 
       <div className="mb-2">

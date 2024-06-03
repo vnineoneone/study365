@@ -33,13 +33,14 @@ export default function Login() {
     const handleLoginSubmit: SubmitHandler<{ email: string, password: string }> = async (data) => {
         if (tab == "student") {
             let res: any = await dispatch(login(data))
+            console.log(res);
 
 
             MySwal.fire({
                 title: <p className='text-lg'>Đang xử lý</p>,
                 didOpen: async () => {
                     MySwal.showLoading()
-                    if (res.payload?.response?.data?.message?.message === "Invalid email!") {
+                    if (!res?.payload.user) {
                         MySwal.fire({
                             title: <p className="text-2xl">Đăng nhập thất bại</p>,
                             icon: 'error',
@@ -65,18 +66,19 @@ export default function Login() {
         }
         else {
             let res: any = await dispatch(loginTeacher(data))
+            console.log(res);
+
             MySwal.fire({
                 title: <p className='text-lg'>Đang xử lý</p>,
                 didOpen: async () => {
                     MySwal.showLoading()
-                    if (res.payload?.response?.data?.message?.message === "Invalid email!") {
+                    if (!res?.payload.user) {
                         MySwal.fire({
                             title: <p className="text-2xl">Đăng nhập thất bại</p>,
                             icon: 'error',
                             showConfirmButton: false,
                             timer: 1000
                         })
-
                     }
                     else {
                         MySwal.fire({

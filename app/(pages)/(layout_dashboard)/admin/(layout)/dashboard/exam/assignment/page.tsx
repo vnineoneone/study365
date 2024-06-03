@@ -39,11 +39,11 @@ export default function AssignmentDashboard() {
     };
     useEffect(() => {
         async function fetchData() {
-            await examApi.getAssigmnentOfExamByTeacherId(`${user.id}`, page, filterString).then((data: any) => {
+            await examApi.getAllAssigmnent(page, filterString).then((data: any) => {
                 setAssignments(data.data.assignments)
                 setPageCount(Math.floor(data.data.count))
             }).catch((err: any) => { })
-            await courseApi.getAllByTeacher(`${user.id}`, '1').then((data: any) => {
+            await courseApi.getAll(``, '1').then((data: any) => {
                 setCourses(data.data.courses)
             }).catch((err: any) => { })
         }
