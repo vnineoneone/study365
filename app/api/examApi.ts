@@ -9,13 +9,13 @@ const examApi = {
     },
 
     getAllReviewExam: () => {
-        const url = `/reviews`;
+        const url = `/reviews?type=exam`;
         return axiosConfig.get(url, {
             baseURL: `${process.env.NEXT_PUBLIC_BASE_URL_EXAM_LOCAL}`
         });
     },
     getAllReviewCombo: () => {
-        const url = `/reviews/combo`;
+        const url = `/reviews?type=combo`;
         return axiosConfig.get(url, {
             baseURL: `${process.env.NEXT_PUBLIC_BASE_URL_EXAM_LOCAL}`
         });

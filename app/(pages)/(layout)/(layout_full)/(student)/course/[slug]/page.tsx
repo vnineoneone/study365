@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { ClockIcon, Squares2X2Icon, FilmIcon, DocumentTextIcon, CheckIcon } from '@heroicons/react/24/outline'
+import { ClockIcon, Squares2X2Icon, FilmIcon, DocumentTextIcon, CheckIcon, DocumentIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, ChevronUpIcon, StarIcon } from '@heroicons/react/20/solid'
 import courseApi from '@/app/api/courseApi';
 import paymentApi from '@/app/api/paymentApi';
@@ -231,7 +231,8 @@ export default function CourseDetail({ params }: { params: { slug: string } }) {
                                                                             <div className="flex justify-between items-center">
                                                                                 <div className="flex justify-center items-center">
                                                                                     <span className='mr-3 bg-[#ececec] w-10 h-10 rounded-full flex justify-center items-center'>
-                                                                                        <FilmIcon className='w-4 h-4' />
+                                                                                        {topic.type === "lecture" ? <FilmIcon className='w-4 h-4' /> : <DocumentIcon className='w-4 h-4' />}
+
                                                                                     </span>
                                                                                     <span className="font-bold text-[rgb(23,19,71)] text-base">
                                                                                         {topic.name}

@@ -16,7 +16,7 @@ const courseApi = {
 
     getAllByTeacher: (id_teacher: string, page: string) => {
         if (page == null) page = '1'
-        const url = `/courses/teacher/${id_teacher}/page=${page}`;
+        const url = `/courses/teacher/${id_teacher}/page/${page}`;
         return axiosConfig.get(url);
     },
 

@@ -101,7 +101,7 @@ export default function LearningPage({ params }: { params: { slug: string } }) {
             time = hours * 60 + minutes;
 
         // Ví dụ URL video
-        const videoUrl = `http://localhost:3000/course/learning/${courseId}?lecture=${topicId}&time=${time}`;
+        const videoUrl = `https://study365.vercel.app/course/learning/${courseId}?lecture=${topicId}&time=${time}`;
 
         return videoUrl;
     }
