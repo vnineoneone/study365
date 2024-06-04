@@ -378,7 +378,13 @@ export default function CommentAssignment({ params, assignment, details }: { par
                                                     showConfirmButton: false,
                                                     timer: 1000
                                                 })
-                                                router.push(`/teacher/dashboard/course/quizz/${assignment?.id_exam}/assignment`)
+                                                if (type == 'exam') {
+                                                    router.push(`/teacher/dashboard/exam/assignment`)
+                                                }
+                                                else {
+                                                    router.push(`/teacher/dashboard/course/quizz/${assignment?.id_exam}/assignment`)
+
+                                                }
                                             }).catch((err: any) => {
                                                 MySwal.fire({
                                                     title: <p className="text-2xl">Đánh giá thất bại</p>,
